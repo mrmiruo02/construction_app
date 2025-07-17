@@ -1,9 +1,0 @@
-PORT=3000
-DB_PORT=8080
-HOST=localhost
-USER=postgres
-PASSWORD=123
-DB=construction_app
-CLIENT_ID=186608839577-md6br74ms1ajlnbuggmimm3r9k8adoni.apps.googleusercontent.com
-CLIENT_SECRET=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
-SESSION_SECRET=secretsessions1234
