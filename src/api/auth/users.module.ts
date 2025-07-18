@@ -4,13 +4,13 @@ import { UserController } from './controllers/users.controller';
 import { UserService } from './services/users.service';
 import { Users } from 'src/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { LocalStrategy } from '../utils/strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from '../utils/strategies/jwt.strategy';
 import { GoogleStrategy } from 'src/utils/strategies/google.strategy';
 import { SessionSerializer } from 'src/utils/serializer/serializer';
 import { GoogleController } from './controllers/google.controller';
 import { GoogleService } from './services/google.service';
+import { LocalStrategy } from 'src/utils/strategies/local.strategy';
+import { JwtStrategy } from 'src/utils/strategies/jwt.strategy';
 
 @Module({
   imports: [

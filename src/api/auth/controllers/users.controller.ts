@@ -10,13 +10,13 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../services/users.service';
 import { LoginModel, loginModel } from '../models/login.model';
-import { LocalGuard } from '../../utils/guards/local.guard';
-import { JwtAuthGuard } from '../../utils/guards/jwt.guard';
 import { Response as ResType } from 'express';
 import { usersCreate, UsersCreate } from '../models/userCreate.model';
 import { usersUpdate, UsersUpdate } from '../models/userUpdate.model';
 import { ZodValidationPipe } from 'src/pipe/zodValidation.pipe';
 import { UsersDelete } from '../models/userDelete.model';
+import { JwtAuthGuard } from 'src/utils/guards/jwt.guard';
+import { LocalGuard } from 'src/utils/guards/local.guard';
 
 @Controller('auth')
 export class UserController {
