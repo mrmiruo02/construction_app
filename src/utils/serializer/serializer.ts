@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { Inject, Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
-import { GoogleService } from 'src/auth/services/google.service';
+import { GoogleService } from 'src/api/auth/services/google.service';
 import { Users } from 'src/entities/user.entity';
 
 @Injectable()
