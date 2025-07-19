@@ -6,7 +6,8 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Post } from './post.entity';
+import { Post } from './post/post.entity';
+import { Comments } from './post/comment.entity';
 
 @Entity()
 export class Users {
@@ -36,4 +37,7 @@ export class Users {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @OneToMany(() => Comments, (comment) => comment.user)
+  comments: Comments[];
 }
