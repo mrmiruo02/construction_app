@@ -2,8 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  HttpException,
-  HttpStatus,
   Patch,
   Post,
   UseGuards,
@@ -25,69 +23,34 @@ export class PostController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ZodValidationPipe(createPostModel))
   async create(@Body() body: CreatePostModel) {
-    try {
-      return await this.postService.createPost(body);
-    } catch (e) {
-      throw new HttpException(
-        e instanceof Error ? e.message : 'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.postService.createPost(body);
   }
 
   @Post('view')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ZodValidationPipe(viewPostModel))
   async viewAll(@Body() body: ViewPostModel) {
-    try {
-      return await this.postService.viewAllPost(body);
-    } catch (e) {
-      throw new HttpException(
-        e instanceof Error ? e.message : 'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.postService.viewAllPost(body);
   }
 
   @Post('view/one')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ZodValidationPipe(viewPostModel))
   async viewSingle(@Body() body: ViewPostModel) {
-    try {
-      return await this.postService.viewOnePost(body);
-    } catch (e) {
-      throw new HttpException(
-        e instanceof Error ? e.message : 'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.postService.viewOnePost(body);
   }
 
   @Patch('update')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ZodValidationPipe(editPostModel))
   async editPost(@Body() body: EditPostModel) {
-    try {
-      return await this.postService.editPost(body);
-    } catch (e) {
-      throw new HttpException(
-        e instanceof Error ? e.message : 'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.postService.editPost(body);
   }
 
   @Delete('delete')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ZodValidationPipe(deletePost))
   async deletePost(@Body() body: DeletePost) {
-    try {
-      return await this.postService.deletePost(body);
-    } catch (e) {
-      throw new HttpException(
-        e instanceof Error ? e.message : 'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.postService.deletePost(body);
   }
 }

@@ -1,4 +1,4 @@
-import { Post } from 'src/entities/post.entity';
+import { Post } from 'src/entities/post/post.entity';
 import { Users } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostModel } from '../models/createPost.model';
@@ -39,7 +39,13 @@ export class PostService {
   async viewOnePost(param: ViewPostModel) {
     const result = await this.postRepository
       .createQueryBuilder('post')
-      .where('post.post_id = :id', { id: param.id })
+      .leftJoinAndSelect('post.user', 'user')
+      .leftJoinAndSelect('post.comments', 'comments')
+      .leftJoinAndSelect('comments.user', 'commentUser')
+      .where('post.post_id = :post_id AND user.id = :user', {
+        post_id: param.post_id,
+        user: param.userID,
+      })
       .getOne();
 
     if (!result) {
@@ -53,6 +59,8 @@ export class PostService {
     const result = await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user')
+      .leftJoinAndSelect('post.comments', 'comments')
+      .leftJoinAndSelect('comments.user', 'commentUser')
       .where('user.id = :user', { user: param.userID })
       .getMany();
 
@@ -63,7 +71,9 @@ export class PostService {
   }
 
   async editPost(param: EditPostModel) {
-    const result = await this.postRepository.findOneBy({ post_id: param.id });
+    const result = await this.postRepository.findOneBy({
+      post_id: param.post_id,
+    });
 
     if (!result) {
       throw new NotFoundException(`User not found`);
@@ -74,12 +84,14 @@ export class PostService {
   }
 
   async deletePost(param: DeletePost) {
-    const result = await this.postRepository.findOneBy({ post_id: param.id });
+    const result = await this.postRepository.delete({
+      post_id: param.post_id,
+    });
 
-    if (!result) {
+    if (result.affected === 0) {
       throw new NotFoundException('Post not found');
     }
 
-    return await this.postRepository.delete(result.post_id);
+    return { message: 'Comment deleted successfully' };
   }
 }

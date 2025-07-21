@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const editPostModel = z
   .object({
-    id: z.number(),
+    post_id: z.number(),
     header: z.string().optional(),
     content: z.string().optional(),
     image_url: z.string().optional(),

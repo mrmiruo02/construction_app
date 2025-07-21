@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const viewPostModel = z
   .object({
-    id: z.number().optional(),
+    post_id: z.number().optional(),
     userID: z.number().optional(),
   })
   .strict();

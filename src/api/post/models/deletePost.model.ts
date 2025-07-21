@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const deletePost = z
   .object({
-    id: z.number().optional(),
+    post_id: z.number().optional(),
   })
   .strict();
 
