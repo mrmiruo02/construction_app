@@ -49,20 +49,13 @@ export class UserService {
   }
 
   async delete(user: UsersDelete) {
-    const { id } = user;
-    const result = await this.userRepository
-      .createQueryBuilder('users')
-      .where('users.id = :id', {
-        id,
-      })
-      .getOne();
+    const result = await this.userRepository.delete({ id: user.id });
 
-    if (!result) {
+    if (result.affected === 0) {
       throw new NotFoundException('user not found');
     }
-    await this.userRepository.delete(id);
 
-    return result;
+    return { message: 'Comment deleted successfully' };
   }
 
   async login(user: LoginModel) {

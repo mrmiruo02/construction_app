@@ -42,8 +42,8 @@ export class PostService {
       .leftJoinAndSelect('post.user', 'user')
       .leftJoinAndSelect('post.comments', 'comments')
       .leftJoinAndSelect('comments.user', 'commentUser')
-      .where('post.post_id = :id AND user.id = :user', {
-        id: param.id,
+      .where('post.post_id = :post_id AND user.id = :user', {
+        post_id: param.post_id,
         user: param.userID,
       })
       .getOne();
@@ -71,7 +71,9 @@ export class PostService {
   }
 
   async editPost(param: EditPostModel) {
-    const result = await this.postRepository.findOneBy({ post_id: param.id });
+    const result = await this.postRepository.findOneBy({
+      post_id: param.post_id,
+    });
 
     if (!result) {
       throw new NotFoundException(`User not found`);
@@ -82,12 +84,14 @@ export class PostService {
   }
 
   async deletePost(param: DeletePost) {
-    const result = await this.postRepository.findOneBy({ post_id: param.id });
+    const result = await this.postRepository.delete({
+      post_id: param.post_id,
+    });
 
-    if (!result) {
+    if (result.affected === 0) {
       throw new NotFoundException('Post not found');
     }
 
-    return await this.postRepository.delete(result.post_id);
+    return { message: 'Comment deleted successfully' };
   }
 }

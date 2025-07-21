@@ -5,6 +5,8 @@ import { Post } from 'src/entities/post/post.entity';
 import { Users } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateCommentPost } from '../models/createCommentPost.model';
+import { EditCommentPost } from '../models/editCommentPost.model';
+import { DeleteCommentPost } from '../models/deleteCommentPost.model';
 
 export class CommentService {
   constructor(
@@ -15,10 +17,6 @@ export class CommentService {
     @InjectRepository(Comments)
     private readonly commentRepository: Repository<Comments>,
   ) {}
-
-  // insert comment - done
-  // update comment - on progress
-  // delete comment - to be follow
 
   async insertComment(param: CreateCommentPost) {
     const user = await this.userRepository
@@ -32,7 +30,7 @@ export class CommentService {
 
     const post = await this.postRepository
       .createQueryBuilder('post')
-      .where('post.post_id = :id', { id: param.postID })
+      .where('post.post_id = :post_id', { post_id: param.postID })
       .getOne();
 
     if (!post) {
@@ -46,5 +44,30 @@ export class CommentService {
     });
 
     return await this.commentRepository.save(createCommentPost);
+  }
+
+  async editComment(param: EditCommentPost) {
+    const comment = await this.commentRepository.findOneBy({
+      comment_id: param.comment_id,
+    });
+
+    if (!comment) {
+      throw new NotFoundException(`comment not found`);
+    }
+
+    Object.assign(comment, param);
+    return this.commentRepository.save(comment);
+  }
+
+  async deleteComment(param: DeleteCommentPost) {
+    const comment = await this.commentRepository.delete({
+      comment_id: param.comment_id,
+    });
+
+    if (comment.affected === 0) {
+      throw new NotFoundException(`comment not found`);
+    }
+
+    return { message: 'Comment deleted successfully' };
   }
 }
