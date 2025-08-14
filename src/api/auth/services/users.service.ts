@@ -68,7 +68,7 @@ export class UserService {
       .getOne();
 
     if (!result) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('Invalid email');
     }
 
     const isMatch = await bcrypt.compare(password, result.password);
@@ -77,6 +77,7 @@ export class UserService {
       const token = this.jwtService.sign({
         userId: result?.id,
         email: result?.email,
+        role: result?.role,
       });
       return token;
     } else {
