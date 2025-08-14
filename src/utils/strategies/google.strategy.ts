@@ -21,17 +21,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
     enum AuthProvider {
-      CUSTOM = 'custom',
-      GOOGLE = 'google',
-      FACEBOOK = 'facebook',
-      TWITTER = 'twitter',
+      CUSTOM = 'CUSTOM',
+      GOOGLE = 'GOOGLE',
+      FACEBOOK = 'FACEBOOK',
     }
 
     enum UserRole {
-      CLIENT = 'client',
-      ADMIN = 'admin',
-      CONSTRUCTOR = 'contructor',
-      SUPPLIER = 'supplier',
+      CLIENT = 'CLIENT',
+      ADMIN = 'ADMIN',
+      CONSTRUCTOR = 'CONTRUCTOR',
+      SUPPLIER = 'SUPPLIER',
     }
 
     const email = profile.emails?.[0].value;

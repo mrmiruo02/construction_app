@@ -23,11 +23,11 @@ export class Users {
   @Column({ default: null })
   password: string;
 
-  @Column({ default: 'client' })
-  role: 'client' | 'admin' | 'contructor' | 'supplier';
+  @Column({ default: 'CLIENT' })
+  role: 'CLIENT' | 'ADMIN' | 'CONTRUCTOR' | 'SUPPLIER';
 
-  @Column({ default: 'custom' })
-  provider: 'custom' | 'google' | 'facebook' | 'twitter';
+  @Column({ default: 'CUSTOM' })
+  provider: 'CUSTOM' | 'GOOGLE' | 'FACEBOOK';
 
   @CreateDateColumn()
   createdAt: Date;

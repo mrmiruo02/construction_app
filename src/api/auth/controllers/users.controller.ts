@@ -17,6 +17,9 @@ import { ZodValidationPipe } from 'src/pipe/zodValidation.pipe';
 import { UsersDelete } from '../models/userDelete.model';
 import { JwtAuthGuard } from 'src/utils/guards/jwt.guard';
 import { LocalGuard } from 'src/utils/guards/local.guard';
+import { Roles } from 'src/utils/decorator/roles.decorator';
+import { Role } from 'src/utils/decorator/role.enum';
+import { RolesGuard } from 'src/utils/guards/role.guard';
 
 @Controller('auth')
 export class UserController {
@@ -43,7 +46,8 @@ export class UserController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.CLIENT)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   findAll() {
     return this.userService.findAll();
   }

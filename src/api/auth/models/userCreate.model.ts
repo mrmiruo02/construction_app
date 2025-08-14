@@ -5,8 +5,8 @@ const usersCreate = z
     name: z.string(),
     email: z.string(),
     password: z.string().optional(),
-    provider: z.enum(['custom', 'google', 'facebook', 'twitter']),
-    role: z.enum(['client', 'admin', 'contructor', 'supplier']),
+    provider: z.enum(['CUSTOM', 'GOOGLE', 'FACEBOOK']),
+    role: z.enum(['CLIENT', 'ADMIN', 'CONTRUCTOR', 'SUPPLIER']),
   })
   .strict();
 
